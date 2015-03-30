@@ -2,9 +2,12 @@ package com.findfine.customview;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
@@ -15,6 +18,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	private Context context;
     private Button btnTest;
 	private RelativeLayout rlViewParent;
+	private AnimatorView animatorView;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,9 @@ public class MainActivity extends Activity implements OnClickListener {
     private void init() {
     	btnTest = (Button) findViewById(R.id.btn_test);
     	rlViewParent = (RelativeLayout) findViewById(R.id.rl_view_parent);
+    	
+//    	initValutAnimator();
+    	initCustomView();
 	}
     
     private void setListener() {
@@ -39,7 +46,7 @@ public class MainActivity extends Activity implements OnClickListener {
     public void onClick(View v) {
     	switch (v.getId()) {
 		case R.id.btn_test:
-			startValutAnimator();
+			animatorView.startAnimator();
 			break;
 
 		default:
@@ -47,12 +54,31 @@ public class MainActivity extends Activity implements OnClickListener {
 		}
     }
     
-    private void startValutAnimator() {
-    	AnimatorView animatorView = new AnimatorView(context);
+    /**
+     * 属性动画，贝赛尔曲线
+     */
+    private void initValutAnimator() {
+    	animatorView = new AnimatorView(context);
     	RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
     	rlViewParent.addView(animatorView, params);
-    	
-    	animatorView.startAnimator();
+    }
+    
+    /**
+     * 自定义View
+     */
+    private void initCustomView() {
+    	final CustomView customView = new CustomView(context);
+    	RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+    	rlViewParent.addView(customView, params);
+    	customView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+			
+			@Override
+			public void onGlobalLayout() {
+				Rect rect = new Rect();
+				customView.getWindowVisibleDisplayFrame(rect);
+				Log.e("onGlobalLayout", "rect === " + rect.toString());
+			}
+		});
     }
 
 }
