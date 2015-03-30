@@ -1,12 +1,5 @@
 package com.findfine.customview.ui.activity;
 
-import com.findfine.customview.R;
-import com.findfine.customview.R.id;
-import com.findfine.customview.R.layout;
-import com.findfine.customview.ui.views.AnimatorView;
-import com.findfine.customview.ui.views.CustomView;
-
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -17,6 +10,10 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
+
+import com.findfine.customview.R;
+import com.findfine.customview.ui.views.AnimatorView;
+import com.findfine.customview.ui.views.CustomView;
 
 
 public class MainActivity extends BaseActivity implements OnClickListener {
