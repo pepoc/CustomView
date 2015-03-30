@@ -24,7 +24,9 @@
             </intent-filter>
         </activity>
         
-        <activity android:name="com.findfine.customview.ui.activity.EditTextSoftInputActivity"></activity>
+        <activity 
+            android:name="com.findfine.customview.ui.activity.EditTextSoftInputActivity"
+            android:windowSoftInputMode="stateHidden" ></activity>
     </application>
 
 </manifest>

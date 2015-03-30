@@ -7,6 +7,7 @@ import com.findfine.customview.ui.views.AnimatorView;
 import com.findfine.customview.ui.views.CustomView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,6 +30,8 @@ public class MainActivity extends BaseActivity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
+        init();
+		setListener();
     }
 	
 	@Override
@@ -38,7 +41,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
     	rlViewParent = (RelativeLayout) findViewById(R.id.rl_view_parent);
     	
 //    	initValutAnimator();
-    	initCustomView();
+//    	initCustomView();
 	}
     
     @Override
@@ -51,7 +54,10 @@ public class MainActivity extends BaseActivity implements OnClickListener {
     public void onClick(View v) {
     	switch (v.getId()) {
 		case R.id.btn_test:
-			animatorView.startAnimator();
+//			animatorView.startAnimator();
+			
+			Intent intent = new Intent(context, EditTextSoftInputActivity.class);
+			startActivity(intent);
 			break;
 
 		default:
