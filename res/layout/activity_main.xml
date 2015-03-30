@@ -4,9 +4,16 @@
     android:layout_height="match_parent"
     tools:context="com.findfine.customview.MainActivity" >
 
-    <TextView
+    <Button
+        android:id="@+id/btn_test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:text="@string/button_test" />
+    
+    <RelativeLayout
+        android:id="@+id/rl_view_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/btn_test" />
 
 </RelativeLayout>
