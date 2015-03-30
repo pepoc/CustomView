@@ -1,5 +1,6 @@
 package com.findfine.customview.ui.activity;
 
+import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -59,7 +61,6 @@ public class EditTextSoftInputActivity extends BaseActivity implements OnClickLi
 		btnTest = (Button) findViewById(R.id.btn_test);
 		customScrollView = (ScrollView) findViewById(R.id.custom_scroll_view);
 		etTest = (EditText) findViewById(R.id.et_test);
-		
 		btn_2 = (Button) findViewById(R.id.btn_2);
 	}
 	
@@ -75,22 +76,26 @@ public class EditTextSoftInputActivity extends BaseActivity implements OnClickLi
 				Rect rect = new Rect();
 				rlParent.getWindowVisibleDisplayFrame(rect);
 //				Log.e("onGlobalLayout", "rect === " + rect.toString());
-				if (mScreenHeight != rect.bottom) {
-					keyBoardHeight = mScreenHeight - rect.bottom;
+//				if (mScreenHeight != rect.bottom) {
+//					keyBoardHeight = mScreenHeight - rect.bottom;
 					
 					int[] location = new int[2];
-					btn_2.getLocationInWindow(location);
-					move = keyBoardHeight - (mScreenHeight - location[1] - btn_2.getHeight());
+					etTest.getLocationInWindow(location);
+//					move = keyBoardHeight - (mScreenHeight - location[1] - btn_2.getHeight());
 					
 					handler.postDelayed(new Runnable() {
 						
 						@Override
 						public void run() {
-							customScrollView.scrollTo(0, move);
+//							customScrollView.scrollTo(0, move);
+							int[] location = new int[2];
+							etTest.getLocationInWindow(location);
+							Log.e("onGlobalLayout", "location[1] === " + location[1]);
 						}
 					}, 100);
-					Log.e("onGlobalLayout", "move === " + move);
-				}
+					
+//					Log.e("onGlobalLayout", "location[1] === " + location[1]);
+//				}
 			}
 		});
 	}
@@ -99,19 +104,39 @@ public class EditTextSoftInputActivity extends BaseActivity implements OnClickLi
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_test:
-			Rect rect = new Rect();
-			int[] location = new int[2];
-			btnTest.getLocationInWindow(location);
-			Rect frame = new Rect();
-			getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
-			int statusBarHeight = frame.top;
-//			Log.i("getGlobalVisibleRect", "rect === " + rect.toString());
-			Log.i("getGlobalVisibleRect", "location === " + location[0] + "-" + location[1]);
-			customScrollView.scrollTo(0, rect.top - statusBarHeight);
+//			Rect rect = new Rect();
+//			int[] location = new int[2];
+//			btnTest.getLocationInWindow(location);
+//			Rect frame = new Rect();
+//			getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+//			int statusBarHeight = frame.top;
+////			Log.i("getGlobalVisibleRect", "rect === " + rect.toString());
+//			Log.i("getGlobalVisibleRect", "location === " + location[0] + "-" + location[1]);
+//			customScrollView.scrollTo(0, rect.top - statusBarHeight);
+			
+			btn_2.setFocusable(true); 
+			btn_2.setFocusableInTouchMode(true); 
+			btn_2.requestFocus(); 
+			InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE); 
+			imm.showSoftInput(btn_2, InputMethodManager.RESULT_SHOWN); 
+			imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 			break;
 
 		default:
 			break;
 		}
 	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		Log.i("onResume()", "onResume()");
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		Log.i("onStart()", "onStart()");
+	}
+	
 }
