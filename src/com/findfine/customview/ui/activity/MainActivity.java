@@ -1,6 +1,11 @@
-package com.findfine.customview;
+package com.findfine.customview.ui.activity;
 
-import android.app.Activity;
+import com.findfine.customview.R;
+import com.findfine.customview.R.id;
+import com.findfine.customview.R.layout;
+import com.findfine.customview.ui.views.AnimatorView;
+import com.findfine.customview.ui.views.CustomView;
+
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -13,9 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
 
-public class MainActivity extends Activity implements OnClickListener {
+public class MainActivity extends BaseActivity implements OnClickListener {
 
-	private Context context;
     private Button btnTest;
 	private RelativeLayout rlViewParent;
 	private AnimatorView animatorView;
@@ -24,23 +28,24 @@ public class MainActivity extends Activity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        context = this;
         
-        init();
-        setListener();
     }
-    
-    private void init() {
-    	btnTest = (Button) findViewById(R.id.btn_test);
+	
+	@Override
+	public void init() {
+		super.init();
+		btnTest = (Button) findViewById(R.id.btn_test);
     	rlViewParent = (RelativeLayout) findViewById(R.id.rl_view_parent);
     	
 //    	initValutAnimator();
     	initCustomView();
 	}
     
-    private void setListener() {
+    @Override
+    public void setListener() {
+    	super.setListener();
     	btnTest.setOnClickListener(this);
-	}
+    }
     
     @Override
     public void onClick(View v) {

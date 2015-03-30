@@ -1,4 +1,4 @@
-package com.findfine.customview;
+package com.findfine.customview.ui.views;
 
 import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;

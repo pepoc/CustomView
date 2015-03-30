@@ -1,4 +1,4 @@
-package com.findfine.customview;
+package com.findfine.customview.ui.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
