@@ -119,7 +119,7 @@ public class EditTextSoftInputActivity extends BaseActivity implements OnClickLi
 			btn_2.setFocusableInTouchMode(true); 
 			btn_2.requestFocus(); 
 			InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE); 
-			imm.showSoftInput(btn_2, InputMethodManager.RESULT_SHOWN); 
+			imm.showSoftInput(etTest, InputMethodManager.RESULT_SHOWN); 
 			imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 			break;
 
@@ -139,5 +139,7 @@ public class EditTextSoftInputActivity extends BaseActivity implements OnClickLi
 		super.onStart();
 		Log.i("onStart()", "onStart()");
 	}
+	
+	
 
 }
