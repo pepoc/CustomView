@@ -1,5 +1,8 @@
 package com.findfine.customview.ui.activity;
 
+import android.animation.TypeEvaluator;
+import android.animation.ValueAnimator;
+import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -8,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.view.WindowManager.LayoutParams;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,17 +41,16 @@ public class EditTextSoftInputActivity extends BaseActivity implements OnClickLi
 	private int keyBoardHeight;
 	private Button btn_2;
 	private int move;
+	private ValueAnimator valueAnimator;
+	private float fraction;
+	private int invisibleHeight;
+	private int moveYYY, etTextY;
 	
-	private Handler handler = new Handler();
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.activity_edit_text_soft_input);
-		
-//		ScrollView scrollView = new ScrollView(context);
-//		scrollView.fullScroll(View.fo);doScrollY
 		
 		init();
 		setListener();
@@ -63,6 +64,26 @@ public class EditTextSoftInputActivity extends BaseActivity implements OnClickLi
 		customScrollView = (ScrollView) findViewById(R.id.custom_scroll_view);
 		etTest = (EditText) findViewById(R.id.et_test);
 		btn_2 = (Button) findViewById(R.id.btn_2);
+		
+		valueAnimator = ValueAnimator.ofObject(new MyTypeEvaluator(), 0f, 1f);
+		valueAnimator.setDuration(150);
+		valueAnimator.addUpdateListener(new AnimatorUpdateListener() {
+			
+			@Override
+			public void onAnimationUpdate(ValueAnimator animation) {
+				Float animatedValue = (Float) animation.getAnimatedValue();
+				fraction = animatedValue.floatValue();
+				if (invisibleHeight > 100) {
+					int moveH = (int)((move - moveYYY) * fraction);
+					rlParent.scrollTo(0, moveH);
+//					Log.i("onAnimationUpdate", moveH + " --------- fraction === " + fraction);
+				} else {
+					int moveH = (int)((move - moveYYY) * (1 - fraction));
+					rlParent.scrollTo(0, moveH);
+//					Log.i("onAnimationUpdate", moveH + " --------- fraction === " + fraction);
+				}
+			}
+		});
 	}
 	
 	@Override
@@ -74,29 +95,36 @@ public class EditTextSoftInputActivity extends BaseActivity implements OnClickLi
 			
 			@Override
 			public void onGlobalLayout() {
+				
+				int[] etTestLocation = new int[2];
+				etTest.getLocationInWindow(etTestLocation);
+				etTextY = etTest.getHeight() + etTestLocation[1];
+				
 				Rect rect = new Rect();
 				rlParent.getWindowVisibleDisplayFrame(rect);
-//				Log.e("onGlobalLayout", "rect === " + rect.toString());
-//				if (mScreenHeight != rect.bottom) {
-//					keyBoardHeight = mScreenHeight - rect.bottom;
-					
+//				rlParent.getScrollY();
+				Log.i("getWindowVisibleDisplayFrame", rect.toString() + "  --- rlParent.getScrollY() === " + rlParent.getScrollY());
+				
+				invisibleHeight = rlParent.getRootView().getHeight() - rect.bottom;
+//				if (invisibleHeight > 100) {
+				if (rect.bottom < mScreenHeight) {
+					keyBoardHeight = mScreenHeight - rect.bottom;
+					moveYYY = etTextY - rect.bottom;
 					int[] location = new int[2];
-					etTest.getLocationInWindow(location);
-//					move = keyBoardHeight - (mScreenHeight - location[1] - btn_2.getHeight());
+					btn_2.getLocationInWindow(location);
 					
-					handler.postDelayed(new Runnable() {
-						
-						@Override
-						public void run() {
-//							customScrollView.scrollTo(0, move);
-							int[] location = new int[2];
-							etTest.getLocationInWindow(location);
-							Log.e("onGlobalLayout", "location[1] === " + location[1]);
-						}
-					}, 100);
+					move = location[1] + btn_2.getHeight() - rect.bottom;
 					
-//					Log.e("onGlobalLayout", "location[1] === " + location[1]);
-//				}
+					valueAnimator.start();
+					
+					Log.e("onGlobalLayout", "--------up-------");
+				} else {
+					
+					Log.e("onGlobalLayout", "--------down-------" + "  --- rlParent.getScrollY() === " + rlParent.getScrollY());
+					if (rlParent.getScrollY() > 0) {
+						valueAnimator.start();
+					}
+				}
 			}
 		});
 	}
@@ -115,12 +143,20 @@ public class EditTextSoftInputActivity extends BaseActivity implements OnClickLi
 //			Log.i("getGlobalVisibleRect", "location === " + location[0] + "-" + location[1]);
 //			customScrollView.scrollTo(0, rect.top - statusBarHeight);
 			
-			btn_2.setFocusable(true); 
-			btn_2.setFocusableInTouchMode(true); 
-			btn_2.requestFocus(); 
-			InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE); 
-			imm.showSoftInput(etTest, InputMethodManager.RESULT_SHOWN); 
-			imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+//			btnTest.setFocusable(true); 
+//			btnTest.setFocusableInTouchMode(true); 
+//			btnTest.requestFocus(); 
+//			InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE); 
+//			imm.showSoftInput(etTest, InputMethodManager.RESULT_SHOWN); 
+//			imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+			
+			int[] location = new int[2];
+			btnTest.getLocationInWindow(location);
+			int[] lll = new int[2];
+			btnTest.getLocationOnScreen(lll);
+			int lalala = lll[1] - location[1];
+			
+			Log.i("lalala", " --- lll[1] === " + lll[1] + "  --- location[1] === " + location[1]);
 			break;
 
 		default:
@@ -140,6 +176,21 @@ public class EditTextSoftInputActivity extends BaseActivity implements OnClickLi
 		Log.i("onStart()", "onStart()");
 	}
 	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		Log.i("onPause()", "onPause()");
+	}
 	
+	class MyTypeEvaluator implements TypeEvaluator<Float> {
+
+		@Override
+		public Float evaluate(float fraction, Float startValue,
+				Float endValue) {
+//			Log.i("lalala", "fraction = " + fraction + " startValue = " + startValue + " endValue = " + endValue);
+			return fraction;
+		}
+		
+	}
 
 }
