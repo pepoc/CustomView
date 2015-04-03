@@ -53,7 +53,10 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		case R.id.btn_test:
 //			animatorView.startAnimator();
 			
-			Intent intent = new Intent(context, EditTextSoftInputActivity.class);
+//			Intent intent = new Intent(context, EditTextSoftInputActivity.class);
+//			startActivity(intent);
+			
+			Intent intent = new Intent(context, GridViewDemoActivity.class);
 			startActivity(intent);
 			break;
 

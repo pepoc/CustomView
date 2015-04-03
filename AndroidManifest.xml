@@ -27,6 +27,9 @@
         <activity 
             android:name="com.findfine.customview.ui.activity.EditTextSoftInputActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" ></activity>
+        
+        <activity 
+            android:name="com.findfine.customview.ui.activity.GridViewDemoActivity" ></activity>
     </application>
 
 </manifest>
