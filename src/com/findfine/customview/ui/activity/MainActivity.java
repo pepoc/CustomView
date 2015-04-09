@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
@@ -28,15 +29,17 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+//        setContentView(R.layout.activity_main);
+//        
+//        init();
+//		setListener();
         
-        init();
-		setListener();
-        
-//        FrameLayout rootView = (FrameLayout) getWindow().getDecorView().findViewById(android.R.id.content);
+        FrameLayout rootView = (FrameLayout) getWindow().getDecorView().findViewById(android.R.id.content);
 //        TextView imageView = new TextView(context);
 //        imageView.setText("dlksajglasdjg;lasdgjsladjglsadjglasdjglasdjglk");
 //        rootView.addView(imageView);
+        
+        LayoutInflater.from(context).inflate(R.layout.activity_main, rootView);
     }
 	
 	@Override
