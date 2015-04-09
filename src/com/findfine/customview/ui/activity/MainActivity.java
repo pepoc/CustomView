@@ -8,8 +8,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
+import android.widget.TextView;
 
 import com.findfine.customview.R;
 import com.findfine.customview.ui.views.AnimatorView;
@@ -29,6 +32,11 @@ public class MainActivity extends BaseActivity implements OnClickListener {
         
         init();
 		setListener();
+        
+//        FrameLayout rootView = (FrameLayout) getWindow().getDecorView().findViewById(android.R.id.content);
+//        TextView imageView = new TextView(context);
+//        imageView.setText("dlksajglasdjg;lasdgjsladjglsadjglasdjglasdjglk");
+//        rootView.addView(imageView);
     }
 	
 	@Override
