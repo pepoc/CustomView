@@ -46,7 +46,7 @@ public class AnimatorView extends View {
 		pathMeasure = new PathMeasure();
 		
 		valueAnimator = ValueAnimator.ofObject(new MyTypeEvaluator(), 0f, 1f);
-		valueAnimator.setDuration(1000);
+		valueAnimator.setDuration(2000);
 		valueAnimator.setRepeatCount(1);
 		valueAnimator.setRepeatMode(ValueAnimator.REVERSE);
 		
@@ -79,8 +79,7 @@ public class AnimatorView extends View {
 //		path.quadTo(moveX, moveY, getWidth() - 500, getHeight() - 500);
 		path.moveTo(getWidth() / 2, 200);
 		path.cubicTo(0, 0, (getWidth() / 2) - (getWidth() / 4) - 100, 400, getWidth() / 2, 510);
-		path.moveTo(getWidth() / 2, 200);
-		path.cubicTo(getWidth(), 0, (getWidth() / 2) + (getWidth() / 4) + 100, 400, getWidth() / 2, 510);
+		path.cubicTo((getWidth() / 2) + (getWidth() / 4) + 100, 400, getWidth(), 0, getWidth() / 2, 200);
 		canvas.drawPath(path, paint);
 		
 		float[] pos = new float[2];

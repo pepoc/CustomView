@@ -54,7 +54,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 //    	DashBoard dashBoard = new DashBoard(context);
 //    	RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 //    	rlViewParent.addView(dashBoard, layoutParams);
-//    	initValutAnimator();
+    	initValutAnimator();
 //    	initCustomView();
 	}
     
@@ -68,7 +68,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
     public void onClick(View v) {
     	switch (v.getId()) {
 		case R.id.btn_test:
-//			animatorView.startAnimator();
+			animatorView.startAnimator();
 			
 //			Intent intent = new Intent(context, EditTextSoftInputActivity.class);
 //			startActivity(intent);
@@ -76,8 +76,8 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 //			Intent intent = new Intent(context, GridViewDemoActivity.class);
 //			startActivity(intent);
 			
-			Intent intent = new Intent(context, DashBoardActivity.class);
-			startActivity(intent);
+//			Intent intent = new Intent(context, DashBoardActivity.class);
+//			startActivity(intent);
 			break;
 
 		default:
@@ -92,6 +92,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
     	animatorView = new AnimatorView(context);
     	RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
     	rlViewParent.addView(animatorView, params);
+//    	animatorView.startAnimator();
     }
     
     /**
