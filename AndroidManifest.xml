@@ -30,6 +30,9 @@
         
         <activity 
             android:name="com.findfine.customview.ui.activity.GridViewDemoActivity" ></activity>
+        
+        <activity 
+            android:name="com.findfine.customview.ui.activity.DashBoardActivity" ></activity>
     </application>
 
 </manifest>

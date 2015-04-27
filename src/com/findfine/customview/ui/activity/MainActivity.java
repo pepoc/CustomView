@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.findfine.customview.R;
 import com.findfine.customview.ui.views.AnimatorView;
 import com.findfine.customview.ui.views.CustomView;
+import com.findfine.customview.ui.views.DashBoard;
 
 
 public class MainActivity extends BaseActivity implements OnClickListener {
@@ -40,6 +41,9 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 //        rootView.addView(imageView);
         
         LayoutInflater.from(context).inflate(R.layout.activity_main, rootView);
+        
+        init();
+        setListener();
     }
 	
 	@Override
@@ -47,7 +51,9 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		super.init();
 		btnTest = (Button) findViewById(R.id.btn_test);
     	rlViewParent = (RelativeLayout) findViewById(R.id.rl_view_parent);
-    	
+//    	DashBoard dashBoard = new DashBoard(context);
+//    	RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+//    	rlViewParent.addView(dashBoard, layoutParams);
 //    	initValutAnimator();
 //    	initCustomView();
 	}
@@ -67,7 +73,10 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 //			Intent intent = new Intent(context, EditTextSoftInputActivity.class);
 //			startActivity(intent);
 			
-			Intent intent = new Intent(context, GridViewDemoActivity.class);
+//			Intent intent = new Intent(context, GridViewDemoActivity.class);
+//			startActivity(intent);
+			
+			Intent intent = new Intent(context, DashBoardActivity.class);
 			startActivity(intent);
 			break;
 
