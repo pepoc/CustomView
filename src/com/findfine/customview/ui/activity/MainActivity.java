@@ -1,116 +1,56 @@
 package com.findfine.customview.ui.activity;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
-import android.widget.TextView;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import com.findfine.customview.R;
-import com.findfine.customview.ui.views.AnimatorView;
-import com.findfine.customview.ui.views.CustomView;
-import com.findfine.customview.ui.views.DashBoard;
 
 
-public class MainActivity extends BaseActivity implements OnClickListener {
-
-    private Button btnTest;
-	private RelativeLayout rlViewParent;
-	private AnimatorView animatorView;
+public class MainActivity extends ListActivity {
+	
+	private Context context;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//        
-//        init();
-//		setListener();
+        context = this;
         
-        FrameLayout rootView = (FrameLayout) getWindow().getDecorView().findViewById(android.R.id.content);
-//        TextView imageView = new TextView(context);
-//        imageView.setText("dlksajglasdjg;lasdgjsladjglsadjglasdjglasdjglk");
-//        rootView.addView(imageView);
-        
-        LayoutInflater.from(context).inflate(R.layout.activity_main, rootView);
-        
-        init();
-        setListener();
+        SimpleAdapter adapter = new SimpleAdapter(context, getData(), android.R.layout.simple_list_item_1, new String[]{"name"}, new int[]{android.R.id.text1});
+        setListAdapter(adapter);
     }
 	
 	@Override
-	public void init() {
-		super.init();
-		btnTest = (Button) findViewById(R.id.btn_test);
-    	rlViewParent = (RelativeLayout) findViewById(R.id.rl_view_parent);
-//    	DashBoard dashBoard = new DashBoard(context);
-//    	RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-//    	rlViewParent.addView(dashBoard, layoutParams);
-    	initValutAnimator();
-//    	initCustomView();
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		List<Map<String, Object>> data = getData();
+		Map<String, Object> map = data.get(position);
+		startActivity((Intent)(map.get("intent")));
+	}
+	
+	private List<Map<String, Object>> getData() {
+		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+		addItem(data, getString(R.string.activity_bessel_curve), BesselCurveActivity.class);
+		addItem(data, getString(R.string.activity_dash_board), DashBoardActivity.class);
+		addItem(data, getString(R.string.activity_soft_input), EditTextSoftInputActivity.class);
+		addItem(data, getString(R.string.activity_grid_view), GridViewDemoActivity.class);
+		return data;
+	}
+	
+	private void addItem(List<Map<String, Object>> data, String name, Class<?> clazz) {
+		Map<String, Object> temp = new HashMap<String, Object>();
+        temp.put("name", name);
+        temp.put("intent", new Intent(context, clazz));
+        data.add(temp);
 	}
     
-    @Override
-    public void setListener() {
-    	super.setListener();
-    	btnTest.setOnClickListener(this);
-    }
-    
-    @Override
-    public void onClick(View v) {
-    	switch (v.getId()) {
-		case R.id.btn_test:
-			animatorView.startAnimator();
-			
-//			Intent intent = new Intent(context, EditTextSoftInputActivity.class);
-//			startActivity(intent);
-			
-//			Intent intent = new Intent(context, GridViewDemoActivity.class);
-//			startActivity(intent);
-			
-//			Intent intent = new Intent(context, DashBoardActivity.class);
-//			startActivity(intent);
-			break;
-
-		default:
-			break;
-		}
-    }
-    
-    /**
-     * 属性动画，贝赛尔曲线
-     */
-    private void initValutAnimator() {
-    	animatorView = new AnimatorView(context);
-    	RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-    	rlViewParent.addView(animatorView, params);
-//    	animatorView.startAnimator();
-    }
-    
-    /**
-     * 自定义View
-     */
-    private void initCustomView() {
-    	final CustomView customView = new CustomView(context);
-    	RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-    	rlViewParent.addView(customView, params);
-    	customView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-			
-			@Override
-			public void onGlobalLayout() {
-				Rect rect = new Rect();
-				customView.getWindowVisibleDisplayFrame(rect);
-				Log.e("onGlobalLayout", "rect === " + rect.toString());
-			}
-		});
-    }
-
 }

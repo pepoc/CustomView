@@ -33,6 +33,9 @@
         
         <activity 
             android:name="com.findfine.customview.ui.activity.DashBoardActivity" ></activity>
+        
+        <activity 
+            android:name="com.findfine.customview.ui.activity.BesselCurveActivity" ></activity>
     </application>
 
 </manifest>
