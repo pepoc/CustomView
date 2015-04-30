@@ -10,5 +10,6 @@
     <string name="activity_dash_board">仪表盘</string>
     <string name="activity_soft_input">登录页面弹起，露出下面登录按钮</string>
     <string name="activity_grid_view">GridView添加头View</string>
+    <string name="activity_raindrop">雨滴拉伸效果</string>
 
 </resources>

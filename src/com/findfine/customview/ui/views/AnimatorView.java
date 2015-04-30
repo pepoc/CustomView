@@ -37,8 +37,6 @@ public class AnimatorView extends View {
 	
 	public AnimatorView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		
-		init();
 	}
 
 	private void init() {

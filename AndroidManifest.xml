@@ -36,6 +36,9 @@
         
         <activity 
             android:name="com.findfine.customview.ui.activity.BesselCurveActivity" ></activity>
+        
+        <activity 
+            android:name="com.findfine.customview.ui.activity.RaindropActivity" ></activity>
     </application>
 
 </manifest>

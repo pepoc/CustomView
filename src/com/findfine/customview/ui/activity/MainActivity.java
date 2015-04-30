@@ -43,6 +43,7 @@ public class MainActivity extends ListActivity {
 		addItem(data, getString(R.string.activity_dash_board), DashBoardActivity.class);
 		addItem(data, getString(R.string.activity_soft_input), EditTextSoftInputActivity.class);
 		addItem(data, getString(R.string.activity_grid_view), GridViewDemoActivity.class);
+		addItem(data, getString(R.string.activity_raindrop), RaindropActivity.class);
 		return data;
 	}
 	
